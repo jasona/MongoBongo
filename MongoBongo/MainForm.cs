@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.Mongo;
-using System.Data.Mongo.Protocol.SystemMessages.Responses;
+using MongoSharp;
+using MongoSharp.Protocol.SystemMessages.Responses;
 
 namespace MongoBongo
 {
@@ -28,11 +28,11 @@ namespace MongoBongo
         void connect_FormDisposed(Object sender, EventArgs e)
         {
             this.Refresh();
-            if (Context != null)
+            if (Server != null)
             {
-                List<DatabaseInfo> databases = Context.GetAllDatabases().ToList<DatabaseInfo>();
+                List<DatabaseInfo> databases = Server.GetAllDatabases().ToList<DatabaseInfo>();
 
-                TreeNode serverNode = new TreeNode(string.Format("({0}:{1})", Context.ServerName, Context.ServerPort), 0, 0);
+                TreeNode serverNode = new TreeNode(string.Format("({0}:{1})", Server.ServerName, Server.ServerPort), 0, 0);
 
                 tvItems.Nodes.Add(serverNode);
 
@@ -55,7 +55,7 @@ namespace MongoBongo
 
         public void AddCollectionNodes(DatabaseInfo db, TreeNode dbNode)
         {
-            var database = Context.GetDatabase(db.Name);
+            var database = Server.GetDatabase(db.Name);
 
             foreach(CollectionInfo collection in database.GetAllCollections())
             {
@@ -65,7 +65,7 @@ namespace MongoBongo
             }
         }
 
-        public MongoContext Context { get; set; }
+        public MongoServer Server { get; set; }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -76,7 +76,7 @@ namespace MongoBongo
         {
             if (MessageBox.Show("Are you sure you wish to disconnect?", "Disconnect Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                Context = null;
+                Server = null;
                 tvItems.Nodes.Clear();
             }
         }

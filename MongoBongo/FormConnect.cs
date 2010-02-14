@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.Mongo;
 using System.Net.Sockets;
+using MongoSharp;
+
 
 namespace MongoBongo
 {
@@ -46,11 +47,11 @@ namespace MongoBongo
 
             if (form != null)
             {
-                MongoContext context = new MongoContext(txtServerName.Text, int.Parse(txtPortNumber.Text), false);
+                MongoServer server = new MongoServer(txtServerName.Text, int.Parse(txtPortNumber.Text), false);
 
                 try
                 {
-                    context.Connect();
+                    server.Connect();
                 }
                 catch (SocketException exc)
                 {
@@ -58,7 +59,7 @@ namespace MongoBongo
                     return;
                 }
 
-                form.Context = context;
+                form.Server = server;
                 this.Close();
             }
         }

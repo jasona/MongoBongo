@@ -13,10 +13,9 @@ C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.exe
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.pdb
 C:\mydata\git\MongoBongo\MongoBongo\bin\Debug\MongoBongo.exe
 C:\mydata\git\MongoBongo\MongoBongo\bin\Debug\MongoBongo.pdb
-C:\mydata\git\MongoBongo\MongoBongo\bin\Debug\System.Data.Mongo.dll
-C:\mydata\git\MongoBongo\MongoBongo\bin\Debug\BSONLib.dll
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\ResolveAssemblyReference.cache
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.MainForm.resources
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.FormConnect.resources
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.Properties.Resources.resources
 C:\mydata\git\MongoBongo\MongoBongo\obj\Debug\MongoBongo.csproj.GenerateResource.Cache
+C:\mydata\git\MongoBongo\MongoBongo\bin\Debug\MongoSharp.dll
