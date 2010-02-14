@@ -17,10 +17,15 @@ namespace MongoBongo
         {
             InitializeComponent();
 
+            this.Load += new EventHandler(MainForm_Load);
+        }
+
+        void MainForm_Load(object sender, EventArgs e)
+        {
             ShowConnectForm();
         }
 
-        void connect_FormClosed(object sender, FormClosedEventArgs e)
+        void connect_FormDisposed(Object sender, EventArgs e)
         {
             this.Refresh();
             if (Context != null)
@@ -30,13 +35,21 @@ namespace MongoBongo
                 TreeNode serverNode = new TreeNode(string.Format("({0}:{1})", Context.ServerName, Context.ServerPort), 0, 0);
 
                 tvItems.Nodes.Add(serverNode);
+
+                toolStripStatusLabel1.Text = "Loading...";
+                statusStrip1.Update();
+                toolStripProgressBar1.Visible = true;
+                toolStripProgressBar1.Maximum = databases.Count;
                 foreach (DatabaseInfo db in databases)
                 {
                     TreeNode node = new TreeNode(db.Name, 1, 1);
                     serverNode.Nodes.Add(node);
 
                     AddCollectionNodes(db, node);
+                    toolStripProgressBar1.Increment(1);
                 }
+                toolStripStatusLabel1.Text = "Ready";
+                toolStripProgressBar1.Visible = false;
             }
         }
 
@@ -70,11 +83,11 @@ namespace MongoBongo
 
         private void ShowConnectForm()
         {
-
-            FormConnect connect = new FormConnect();
-            connect.FormClosed += new FormClosedEventHandler(connect_FormClosed);
-            connect.ShowDialog(this);
-
+            using (FormConnect connect = new FormConnect())
+            {
+                connect.Disposed += new EventHandler(connect_FormDisposed);
+                connect.ShowDialog(this);
+            }
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
