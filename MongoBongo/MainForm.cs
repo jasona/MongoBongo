@@ -17,13 +17,12 @@ namespace MongoBongo
         {
             InitializeComponent();
 
-            FormConnect connect = new FormConnect();
-            connect.FormClosed += new FormClosedEventHandler(connect_FormClosed);
-            connect.ShowDialog(this);
+            ShowConnectForm();
         }
 
         void connect_FormClosed(object sender, FormClosedEventArgs e)
         {
+            this.Refresh();
             if (Context != null)
             {
                 List<DatabaseInfo> databases = Context.GetAllDatabases().ToList<DatabaseInfo>();
@@ -58,6 +57,29 @@ namespace MongoBongo
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you wish to disconnect?", "Disconnect Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Context = null;
+                tvItems.Nodes.Clear();
+            }
+        }
+
+        private void ShowConnectForm()
+        {
+
+            FormConnect connect = new FormConnect();
+            connect.FormClosed += new FormClosedEventHandler(connect_FormClosed);
+            connect.ShowDialog(this);
+
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowConnectForm();
         }
     }
 }
